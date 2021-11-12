@@ -12,6 +12,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+#define TAG_ADDR "7D:00:22:EA:82:60:3B:9C"
+
 // #define DEBUG
 
 #define SPI_SCK 18
@@ -33,7 +35,7 @@ typedef struct Link
     struct Link *next;
 } link;
 
-Link *uwb_data;
+link *uwb_data;
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
@@ -65,7 +67,12 @@ void setup()
     //DW1000Ranging.useRangeFilter(true);
 
     //we start the module as a tag
-    DW1000Ranging.startAsTag("7D:00:22:EA:82:60:3B:9C", DW1000.MODE_LONGDATA_RANGE_ACCURACY);
+    DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_LONGDATA_RANGE_LOWPOWER);
+    // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_SHORTDATA_FAST_LOWPOWER);
+    // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_LONGDATA_FAST_LOWPOWER);
+    // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_SHORTDATA_FAST_ACCURACY);
+    // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_LONGDATA_FAST_ACCURACY);
+    // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_LONGDATA_RANGE_ACCURACY);
 
     uwb_data = init_link();
 }
@@ -268,13 +275,13 @@ void logoshow(void)
     delay(2000);
 }
 
-void display_uwb(Link *p)
+void display_uwb(link *p)
 {
     link *temp = p;
     int row = 0;
 
     display.clearDisplay();
-    
+
     display.setTextColor(SSD1306_WHITE);
 
     if (temp->next == NULL)
@@ -298,11 +305,11 @@ void display_uwb(Link *p)
 
         //sprintf(c, "%X:%.1f m %.1f", temp->anchor_addr, temp->range, temp->dbm);
         sprintf(c, "%X:%.1f m", temp->anchor_addr, temp->range);
-        display.setTextSize(2);
+        display.setTextSize(1);
         display.setCursor(0, row++ * 32); // Start at top-left corner
         display.println(c);
 
-        sprintf(c, "%.2f dbm",temp->dbm);
+        sprintf(c, "%.2f dbm", temp->dbm);
         display.setTextSize(1);
         display.println(c);
 

@@ -8,7 +8,7 @@
 #include <SPI.h>
 #include "DW1000Ranging.h"
 
-#define ANCHOR_ADD "82:17:5B:D5:A9:9A:E2:9C"
+#define ANCHOR_ADD "83:17:5B:D5:A9:9A:E2:9C"
 
 #define SPI_SCK 18
 #define SPI_MISO 19
@@ -37,7 +37,7 @@ void setup()
     //we start the module as an anchor
     // DW1000Ranging.startAsAnchor("82:17:5B:D5:A9:9A:E2:9C", DW1000.MODE_LONGDATA_RANGE_ACCURACY);
 
-    DW1000Ranging.startAsAnchor(ANCHOR_ADD, DW1000.MODE_LONGDATA_RANGE_LOWPOWER);
+    DW1000Ranging.startAsAnchor(ANCHOR_ADD, DW1000.MODE_LONGDATA_RANGE_LOWPOWER, false);
     // DW1000Ranging.startAsAnchor(ANCHOR_ADD, DW1000.MODE_SHORTDATA_FAST_LOWPOWER);
     // DW1000Ranging.startAsAnchor(ANCHOR_ADD, DW1000.MODE_LONGDATA_FAST_LOWPOWER);
     // DW1000Ranging.startAsAnchor(ANCHOR_ADD, DW1000.MODE_SHORTDATA_FAST_ACCURACY);

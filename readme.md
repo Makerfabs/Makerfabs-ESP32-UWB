@@ -2,11 +2,11 @@
 
 ```c++
 /*
-Version:		V1.0
+Version:		V2.0
 Author:			Vincent
 Create Date:	2021/11/6
 Note:
-	
+	2021/12/9 V2.0:Add a Indoor Positioning demo.
 */
 ```
 ![](md_pic/main.jpg)
@@ -115,6 +115,32 @@ Distance to the receiving end of the test. You need an anchor point to receive d
 ### Tag_1306
 
 There is an SSD1306 screen receiver, and a data structure for storing multiple anchor points is implemented. (The screen can display a maximum of two anchors, you can modify the font size to show more anchors). You need an anchor point to receive data.
+
+
+
+### Indoor positioning
+
+Three UWB modules were used for indoor plane positioning. Data is transmitted through UDP protocol and graphically displayed in Python. 
+
+![](md_pic/pos.jpg)
+
+The law of cosines is used to calculate tag coordinates.
+
+```python
+def tag_pos(a, b, c):
+    # p = (a + b + c) / 2.0
+    # s = cmath.sqrt(p * (p - a) * (p - b) * (p - c))
+    # y = 2.0 * s / c
+    # x = cmath.sqrt(b * b - y * y)
+    cos_a = (b * b + c*c - a * a) / (2 * b * c)
+    x = b * cos_a
+    y = b * cmath.sqrt(1 - cos_a * cos_a)
+
+    return round(x.real, 1), round(y.real, 1)
+```
+
+
+
 
 
 ## Code Explain

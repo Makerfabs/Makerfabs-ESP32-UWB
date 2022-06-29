@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @todo
  *  - move strings to flash (less RAM consumption)
  *  - fix deprecated convertation form string to char* startAsTag
@@ -27,15 +27,15 @@
 #define I2C_SDA 32
 #define I2C_SCL 33
 
-typedef struct Link
+struct Link
 {
     uint16_t anchor_addr;
     float range;
     float dbm;
     struct Link *next;
-} link;
+};
 
-link *uwb_data;
+struct Link *uwb_data;
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
@@ -56,17 +56,17 @@ void setup()
 
     logoshow();
 
-    //init the configuration
+    // init the configuration
     SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
-    DW1000Ranging.initCommunication(UWB_RST, UWB_SS, UWB_IRQ); //Reset, CS, IRQ pin
-    //define the sketch as anchor. It will be great to dynamically change the type of module
+    DW1000Ranging.initCommunication(UWB_RST, UWB_SS, UWB_IRQ); // Reset, CS, IRQ pin
+    // define the sketch as anchor. It will be great to dynamically change the type of module
     DW1000Ranging.attachNewRange(newRange);
     DW1000Ranging.attachNewDevice(newDevice);
     DW1000Ranging.attachInactiveDevice(inactiveDevice);
-    //Enable the filter to smooth the distance
-    //DW1000Ranging.useRangeFilter(true);
+    // Enable the filter to smooth the distance
+    // DW1000Ranging.useRangeFilter(true);
 
-    //we start the module as a tag
+    // we start the module as a tag
     DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_LONGDATA_RANGE_LOWPOWER);
     // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_SHORTDATA_FAST_LOWPOWER);
     // DW1000Ranging.startAsTag(TAG_ADDR, DW1000.MODE_LONGDATA_FAST_LOWPOWER);
@@ -101,7 +101,7 @@ void newRange()
     Serial.println(" dBm");
 
     fresh_link(uwb_data, DW1000Ranging.getDistantDevice()->getShortAddress(), DW1000Ranging.getDistantDevice()->getRange(), DW1000Ranging.getDistantDevice()->getRXPower());
-    //print_link(uwb_data);
+    // print_link(uwb_data);
 }
 
 void newDevice(DW1000Device *device)
@@ -121,14 +121,14 @@ void inactiveDevice(DW1000Device *device)
     delete_link(uwb_data, device->getShortAddress());
 }
 
-//Data Link
+// Data Link
 
-link *init_link()
+struct Link *init_link()
 {
 #ifdef DEBUG
     Serial.println("init_link");
 #endif
-    link *p = (link *)malloc(sizeof(link));
+    struct Link *p = (struct Link *)malloc(sizeof(struct Link));
     p->next = NULL;
     p->anchor_addr = 0;
     p->range = 0.0;
@@ -136,33 +136,33 @@ link *init_link()
     return p;
 }
 
-void add_link(link *p, uint16_t addr)
+void add_link(struct Link *p, uint16_t addr)
 {
 #ifdef DEBUG
     Serial.println("add_link");
 #endif
-    link *temp = p;
-    //Find link end
+    struct Link *temp = p;
+    // Find struct Link end
     while (temp->next != NULL)
     {
         temp = temp->next;
     }
 
-    Serial.println("add_link:find link end");
-    //Create a anchor
-    link *a = (link *)malloc(sizeof(link));
+    Serial.println("add_link:find struct Link end");
+    // Create a anchor
+    struct Link *a = (struct Link *)malloc(sizeof(struct Link));
     a->anchor_addr = addr;
     a->range = 0.0;
     a->dbm = 0.0;
     a->next = NULL;
 
-    //Add anchor to end of link
+    // Add anchor to end of struct Link
     temp->next = a;
 
     return;
 }
 
-link *find_link(link *p, uint16_t addr)
+struct Link *find_link(struct Link *p, uint16_t addr)
 {
 #ifdef DEBUG
     Serial.println("find_link");
@@ -179,8 +179,8 @@ link *find_link(link *p, uint16_t addr)
         return NULL;
     }
 
-    link *temp = p;
-    //Find target link or link end
+    struct Link *temp = p;
+    // Find target struct Link or struct Link end
     while (temp->next != NULL)
     {
         temp = temp->next;
@@ -195,12 +195,12 @@ link *find_link(link *p, uint16_t addr)
     return NULL;
 }
 
-void fresh_link(link *p, uint16_t addr, float range, float dbm)
+void fresh_link(struct Link *p, uint16_t addr, float range, float dbm)
 {
 #ifdef DEBUG
     Serial.println("fresh_link");
 #endif
-    link *temp = find_link(p, addr);
+    struct Link *temp = find_link(p, addr);
     if (temp != NULL)
     {
 
@@ -215,16 +215,16 @@ void fresh_link(link *p, uint16_t addr, float range, float dbm)
     }
 }
 
-void print_link(link *p)
+void print_link(struct Link *p)
 {
 #ifdef DEBUG
     Serial.println("print_link");
 #endif
-    link *temp = p;
+    struct Link *temp = p;
 
     while (temp->next != NULL)
     {
-        //Serial.println("Dev %d:%d m", temp->next->anchor_addr, temp->next->range);
+        // Serial.println("Dev %d:%d m", temp->next->anchor_addr, temp->next->range);
         Serial.println(temp->next->anchor_addr, HEX);
         Serial.println(temp->next->range);
         Serial.println(temp->next->dbm);
@@ -234,7 +234,7 @@ void print_link(link *p)
     return;
 }
 
-void delete_link(link *p, uint16_t addr)
+void delete_link(struct Link *p, uint16_t addr)
 {
 #ifdef DEBUG
     Serial.println("delete_link");
@@ -242,12 +242,12 @@ void delete_link(link *p, uint16_t addr)
     if (addr == 0)
         return;
 
-    link *temp = p;
+    struct Link *temp = p;
     while (temp->next != NULL)
     {
         if (temp->next->anchor_addr == addr)
         {
-            link *del = temp->next;
+            struct Link *del = temp->next;
             temp->next = del->next;
             free(del);
             return;
@@ -257,7 +257,7 @@ void delete_link(link *p, uint16_t addr)
     return;
 }
 
-//SSD1306
+// SSD1306
 
 void logoshow(void)
 {
@@ -275,9 +275,9 @@ void logoshow(void)
     delay(2000);
 }
 
-void display_uwb(link *p)
+void display_uwb(struct Link *p)
 {
-    link *temp = p;
+    struct Link *temp = p;
     int row = 0;
 
     display.clearDisplay();
@@ -297,23 +297,26 @@ void display_uwb(link *p)
     {
         temp = temp->next;
 
-        //Serial.println("Dev %d:%d m", temp->next->anchor_addr, temp->next->range);
+        // Serial.println("Dev %d:%d m", temp->next->anchor_addr, temp->next->range);
         Serial.println(temp->anchor_addr, HEX);
         Serial.println(temp->range);
 
         char c[30];
 
-        //sprintf(c, "%X:%.1f m %.1f", temp->anchor_addr, temp->range, temp->dbm);
-        sprintf(c, "%X:%.1f m", temp->anchor_addr, temp->range);
-        display.setTextSize(1);
+        // sprintf(c, "%X:%.1f m %.1f", temp->anchor_addr, temp->range, temp->dbm);
+        // sprintf(c, "%X:%.1f m", temp->anchor_addr, temp->range);
+        sprintf(c, "%.1f m", temp->range);
+        display.setTextSize(2);
         display.setCursor(0, row++ * 32); // Start at top-left corner
         display.println(c);
 
+        display.println("");
+
         sprintf(c, "%.2f dbm", temp->dbm);
-        display.setTextSize(1);
+        display.setTextSize(2);
         display.println(c);
 
-        if (row >= 2)
+        if (row >= 1)
         {
             break;
         }

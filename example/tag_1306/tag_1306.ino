@@ -1,10 +1,3 @@
-/**
- *
- * @todo
- *  - move strings to flash (less RAM consumption)
- *  - fix deprecated convertation form string to char* startAsTag
- *  - give example description
- */
 #include <SPI.h>
 #include "DW1000Ranging.h"
 

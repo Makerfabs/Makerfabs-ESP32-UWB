@@ -2,12 +2,13 @@
 
 ```c++
 /*
-Version:		V2.1
+Version:		V3.0
 Author:			Vincent
 Create Date:	2021/11/6
 Note:
-	2021/12/9 V2.0:Add a Indoor Positioning demo.
-	2022/6/29 V2.1:Add DW3000 library.
+	2021/12/9 	V2.0:Add a Indoor Positioning demo.
+	2022/6/29 	V2.1:Add DW3000 library.
+	2022/8/1  	V3.0:Provides a library available for high-power versions. Move DW3000 to other 		  					     repositories.
 */
 ```
 ![](md_pic/main.jpg)
@@ -34,6 +35,10 @@ The DW1000 is a single-chip wireless transceiver based on ultra-wideband technol
 
 The chip provides a new approach to real-time location and indoor location systems, location-based services, wireless sensor networks and the Internet of Things by providing accurate location awareness and communication.
 
+UWB - X1 - PRO module is our decaWave DW1000 chip design company based UWB transceiver module products. After the encapsulation All compatible DWM1000, pin pin to pin, can directly replace to use. The antenna is integrated in the module and all of the rf circuit, power management and clock circuit is equal to one.
+
+Based on our actual tests, the range range of the standard DW1000 is around 47 meters, and the long-distance version can reach 125 meters. Of course, it depends on the test environment.
+
 
 
 
@@ -41,6 +46,7 @@ The chip provides a new approach to real-time location and indoor location syste
 
 - Integrated ESP32 2.4G WiFi and Bluetooth.
 - DW1000 UWB module.
+- UWB - X1 - PRO module.(Long range)
 
 
 ### Front:
@@ -49,6 +55,12 @@ The chip provides a new approach to real-time location and indoor location syste
 
 ### Back:
 ![back](md_pic/back.jpg)
+
+### Long Range Version
+
+![long](md_pic/long.jpg)
+
+
 
 
 # Example
@@ -101,6 +113,60 @@ Comment out these code, or a compilation error will occur.
 ```
 
 - Upload code, select board "ESP32 DEV"
+
+
+
+**V3.0 Update**
+
+Modify by [DW1000](https://github.com/thotro/arduino-dw1000) version 0.9.0
+
+Provides a library available for high-power versions. It is also compatible with the standard DW1000, and in fact only adds an initialization function for the high-power version. Of course, it also includes the changes above.
+
+ 
+
+```c++
+
+// Vincent changes
+// For large power moudle
+void DW1000Class::large_power_init()
+{
+	// uint32 reg;
+	// reg = dwt_read32bitreg(GPIO_CTRL_ID);
+	// reg |= 0x00014000;
+	// reg |= 0x00050000;
+	// dwt_write32bitreg(GPIO_CTRL_ID, reg);
+	// dwt_write16bitoffsetreg(PMSC_ID, PMSC_TXFINESEQ_OFFSET, PMSC_TXFINESEQ_DISABLE);
+
+	byte reg[4];
+
+	readBytes(GPIO_CTRL, 0, reg, 4);
+
+	reg[1] |= 0x40;
+	reg[2] |= 0x01;
+	reg[2] |= 0x05;
+
+	writeBytes(GPIO_CTRL, 0, reg, 4);
+
+	reg[0] = reg[1] = reg[2] = reg[3] = 0;
+	writeBytes(PMSC, 0x26, reg, 2);
+
+	reg[0] = 0xC0;
+	reg[1] = 0;
+	reg[2] = 0;
+	reg[3] = 0;
+	writeBytes(TX_CAL, TC_PGDELAY_SUB, reg, 1);
+
+	reg[0] = 0x1f;
+	reg[1] = 0x1f;
+	reg[2] = 0x1f;
+	reg[3] = 0x1f;
+	writeBytes(TX_POWER, 0, reg, 4);
+}
+```
+
+
+
+
 
 
 ## Example List

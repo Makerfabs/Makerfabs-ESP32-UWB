@@ -1,14 +1,7 @@
-/**
- * 
- * @todo
- *  - move strings to flash (less RAM consumption)
- *  - fix deprecated convertation form string to char* startAsAnchor
- *  - give example description
- */
 #include <SPI.h>
 #include "DW1000Ranging.h"
 
-#define ANCHOR_ADD "83:17:5B:D5:A9:9A:E2:9C"
+#define ANCHOR_ADD "86:17:5B:D5:A9:9A:E2:9C"
 
 #define SPI_SCK 18
 #define SPI_MISO 19

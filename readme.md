@@ -9,6 +9,8 @@ Note:
 	2021/12/9 	V2.0:Add a Indoor Positioning demo.
 	2022/6/29 	V2.1:Add DW3000 library.
 	2022/8/1  	V3.0:Provides a library available for high-power versions. Move DW3000 to other 		  					     repositories.
+	2022/9/6	V3.1:Added changes to the high-power version.
+
 */
 ```
 ![](md_pic/main.jpg)
@@ -56,7 +58,7 @@ Based on our actual tests, the range range of the standard DW1000 is around 47 m
 ### Back:
 ![back](md_pic/back.jpg)
 
-### Long Range Version
+### Long Range Version UWB-X1-Pro
 
 ![long](md_pic/long.jpg)
 
@@ -165,6 +167,22 @@ void DW1000Class::large_power_init()
 ```
 
 
+
+**V3.1 Update**
+
+By changing the channel from Channel5 to Channel2, the distance of UWB-X1-Pro can reach 320M.
+
+![](md_pic/pro320m.jpg)
+
+This is due to the fact that the X1-Pro's antenna is optimized for Channel2.
+
+But Makerfabs could not provide further technical support, just suggestions from suppliers.
+
+If you're interested, try DW1000_channel2.zip, or make changes directly in the DW1000 library code.
+
+![](md_pic/v2.jpg)
+
+![](md_pic/v1.jpg)
 
 
 

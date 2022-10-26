@@ -55,7 +55,8 @@ The chip provides a new approach to real-time location and indoor location syste
 
 - Integrated ESP32 2.4G WiFi and Bluetooth.
 - DW1000 UWB module.
-- UWB - X1 - Max module.(Pro and Pro with Display version)
+- UWB - X1 - Max module. (Pro and Pro with Display version)
+- SSD1306 OLED screen. (Pro with Display version))
 
 
 ### Front:
@@ -74,143 +75,52 @@ The chip provides a new approach to real-time location and indoor location syste
 
 # Example
 
-## Equipment list
-
-
-- At least two ESP32 UWB
-
-
 ## Compiler Options
 
 **If you have any questions，such as how to install the development board, how to download the code, how to install the library. Please refer to :[Makerfabs_FAQ](https://github.com/Makerfabs/Makerfabs_FAQ)**
 
 - Install board : ESP32 .
-- Install library : arduino-dw1000
-- Change code in DW1000.cpp
-
-```c++
-void DW1000Class::begin(uint8_t irq, uint8_t rst) {
-	// generous initial init/wake-up-idle delay
-	delay(5);
-	// Configure the IRQ pin as INPUT. Required for correct interrupt setting for ESP8266
-    	pinMode(irq, INPUT);
-	// start SPI
-	SPI.begin();
-
-// Change By VINCENT
-// #ifndef ESP8266
-// 	SPI.usingInterrupt(digitalPinToInterrupt(irq)); // not every board support this, e.g. ESP8266
-// #endif
-
-	// pin and basic member setup
-	_rst        = rst;
-	_irq        = irq;
-	_deviceMode = IDLE_MODE;
-	// attach interrupt
-	//attachInterrupt(_irq, DW1000Class::handleInterrupt, CHANGE); // todo interrupt for ESP8266
-	// TODO throw error if pin is not a interrupt pin
-	attachInterrupt(digitalPinToInterrupt(_irq), DW1000Class::handleInterrupt, RISING); // todo interrupt for ESP8266
-}
-```
-
-Comment out these code, or a compilation error will occur.
-
-```c++
-// #ifndef ESP8266
-// 	SPI.usingInterrupt(digitalPinToInterrupt(irq)); // not every board support this, e.g. ESP8266
-// #endif
-```
-
+- Install zip library : DW1000.zip
+- Install library : Adafruit_SSD1306
 - Upload code, select board "ESP32 DEV"
 
 
 
-**V3.0 Update**
+## Firmware
 
-Modify by [DW1000](https://github.com/thotro/arduino-dw1000) version 0.9.0
+### uwb_tag
 
-Provides a library available for high-power versions. It is also compatible with the standard DW1000, and in fact only adds an initialization function for the high-power version. Of course, it also includes the changes above.
+*For ESP32 UWB and ESP32 UWB Pro*
 
- 
+Distance to the receiving end of the test. You need an anchor point to receive data.
 
-```c++
+### uwb_tag_display
 
-// Vincent changes
-// For large power moudle
-void DW1000Class::large_power_init()
-{
-	// uint32 reg;
-	// reg = dwt_read32bitreg(GPIO_CTRL_ID);
-	// reg |= 0x00014000;
-	// reg |= 0x00050000;
-	// dwt_write32bitreg(GPIO_CTRL_ID, reg);
-	// dwt_write16bitoffsetreg(PMSC_ID, PMSC_TXFINESEQ_OFFSET, PMSC_TXFINESEQ_DISABLE);
+*For ESP32 Pro with display*
 
-	byte reg[4];
-
-	readBytes(GPIO_CTRL, 0, reg, 4);
-
-	reg[1] |= 0x40;
-	reg[2] |= 0x01;
-	reg[2] |= 0x05;
-
-	writeBytes(GPIO_CTRL, 0, reg, 4);
-
-	reg[0] = reg[1] = reg[2] = reg[3] = 0;
-	writeBytes(PMSC, 0x26, reg, 2);
-
-	reg[0] = 0xC0;
-	reg[1] = 0;
-	reg[2] = 0;
-	reg[3] = 0;
-	writeBytes(TX_CAL, TC_PGDELAY_SUB, reg, 1);
-
-	reg[0] = 0x1f;
-	reg[1] = 0x1f;
-	reg[2] = 0x1f;
-	reg[3] = 0x1f;
-	writeBytes(TX_POWER, 0, reg, 4);
-}
-```
-
-
-
-**V3.1 Update**
-
-By changing the channel from Channel5 to Channel2, the distance of UWB-X1-Pro can reach 320M.
-
-![](md_pic/pro320m.jpg)
-
-This is due to the fact that the X1-Pro's antenna is optimized for Channel2.
-
-But Makerfabs could not provide further technical support, just suggestions from suppliers.
-
-If you're interested, try DW1000_channel2.zip, or make changes directly in the DW1000 library code.
-
-![](md_pic/v2.jpg)
-
-![](md_pic/v1.jpg)
-
-
-
+Distance to the receiving end of the test. You need an anchor point to receive data.
 
 ## Example List
 
 ### Anchor
 
+*For ESP32 UWB and ESP32 UWB Pro*
+
 Distance test anchor point.
 
-### Tag
+### Anchor_1306
 
-Distance to the receiving end of the test. You need an anchor point to receive data.
+*For ESP32 Pro with display*
 
-### Tag_1306
+Distance test anchor point.
 
-There is an SSD1306 screen receiver, and a data structure for storing multiple anchor points is implemented. (The screen can display a maximum of two anchors, you can modify the font size to show more anchors). You need an anchor point to receive data.
+
 
 
 
 ### Indoor positioning
+
+*For ESP32 UWB and ESP32 UWB Pro*
 
 Three UWB modules were used for indoor plane positioning. Data is transmitted through UDP protocol and graphically displayed in Python. 
 
@@ -235,19 +145,32 @@ def tag_pos(a, b, c):
 
 
 
-## Code Explain
+## Pin Define
 
-- Define Pins
+### ESP32 UWB and ESP32 UWB Pro
 
 ```c++
 #define SPI_SCK 18
 #define SPI_MISO 19
 #define SPI_MOSI 23
-#define DW_CS 4
 
-// connection pins
-const uint8_t PIN_RST = 27; // reset pin
-const uint8_t PIN_IRQ = 34; // irq pin
-const uint8_t PIN_SS = 4;   // spi select pin
+#define DW_CS 4
+#define PIN_RST 27
+#define PIN_IRQ 34
+```
+
+### ESP32 Pro with display
+
+```c++
+#define SPI_SCK 18
+#define SPI_MISO 19
+#define SPI_MOSI 23
+
+#define UWB_SS 21   // spi select pin
+#define UWB_RST 27  // reset pin
+#define UWB_IRQ 34  // irq pin
+
+#define I2C_SDA 4	//I2C screen ssd1306
+#define I2C_SCL 5
 ```
 

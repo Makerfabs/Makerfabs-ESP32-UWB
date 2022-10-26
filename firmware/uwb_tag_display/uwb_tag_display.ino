@@ -1,6 +1,6 @@
 /*
 
-For ESP32 UWB or ESP32 UWB Pro
+For ESP32 UWB Pro with Display
 
 */
 
@@ -11,7 +11,7 @@ For ESP32 UWB or ESP32 UWB Pro
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define TAG_ADDR "7D:00:22:EA:82:60:3B:9C"
+#define TAG_ADDR "7D:00:22:EA:82:60:3B:9B"
 
 // #define DEBUG
 
@@ -21,10 +21,10 @@ For ESP32 UWB or ESP32 UWB Pro
 
 #define UWB_RST 27 // reset pin
 #define UWB_IRQ 34 // irq pin
-#define UWB_SS 4   // spi select pin
+#define UWB_SS 21   // spi select pin
 
-#define I2C_SDA 32
-#define I2C_SCL 33
+#define I2C_SDA 4
+#define I2C_SCL 5
 
 struct Link
 {

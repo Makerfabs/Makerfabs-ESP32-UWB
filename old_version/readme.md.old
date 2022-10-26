@@ -1,17 +1,16 @@
-# Makerfabs ESP32 UWB & Display
+# Makerfabs ESP32 UWB
 
 ```c++
 /*
-Version:		V4.0
+Version:		V3.0
 Author:			Vincent
 Create Date:	2021/11/6
 Note:
-
 	2021/12/9 	V2.0:Add a Indoor Positioning demo.
 	2022/6/29 	V2.1:Add DW3000 library.
 	2022/8/1  	V3.0:Provides a library available for high-power versions. Move DW3000 to other 		  					     repositories.
 	2022/9/6	V3.1:Added changes to the high-power version.
-	2022/10/26 	V4.0:Add new version with SSD1306
+
 */
 ```
 ![](md_pic/main.jpg)
@@ -25,20 +24,12 @@ Note:
 
 [Makerfabs Wiki](https://makerfabs.com/wiki/index.php?title=Main_Page)
 
-# Makerfabs ESP32 UWB Serials
+# Makerfabs ESP32 UWB
 ## Intruduce
 
-
-
-ESP32 UWB : [esp32-uwb-ultra-wideband](https://www.makerfabs.com/esp32-uwb-ultra-wideband.html) 
-
-ESP32 UWB Pro : [esp32-uwb-high-power](https://www.makerfabs.com/esp32-uwb-high-power-120m.html)
-
-ESP32 UWB Pro with Display : []()
+Product Link ：[esp32-uwb-ultra-wideband](https://www.makerfabs.com/esp32-uwb-ultra-wideband.html) 
 
 Wiki Link : [ESP32_UWB](https://www.makerfabs.com/wiki/index.php?title=ESP32_UWB) 
-
-
 
 Makerfabs ESP32 UWB contains an ESP32 and a DW1000 chip.
 
@@ -46,7 +37,9 @@ The DW1000 is a single-chip wireless transceiver based on ultra-wideband technol
 
 The chip provides a new approach to real-time location and indoor location systems, location-based services, wireless sensor networks and the Internet of Things by providing accurate location awareness and communication.
 
+UWB - X1 - PRO module is our decaWave DW1000 chip design company based UWB transceiver module products. After the encapsulation All compatible DWM1000, pin pin to pin, can directly replace to use. The antenna is integrated in the module and all of the rf circuit, power management and clock circuit is equal to one.
 
+Based on our actual tests, the range range of the standard DW1000 is around 47 meters, and the long-distance version can reach 125 meters. Of course, it depends on the test environment.
 
 
 
@@ -55,7 +48,7 @@ The chip provides a new approach to real-time location and indoor location syste
 
 - Integrated ESP32 2.4G WiFi and Bluetooth.
 - DW1000 UWB module.
-- UWB - X1 - Max module.(Pro and Pro with Display version)
+- UWB - X1 - PRO module.(Long range)
 
 
 ### Front:

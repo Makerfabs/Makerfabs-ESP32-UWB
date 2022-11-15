@@ -80,7 +80,7 @@ The chip provides a new approach to real-time location and indoor location syste
 **If you have any questions，such as how to install the development board, how to download the code, how to install the library. Please refer to :[Makerfabs_FAQ](https://github.com/Makerfabs/Makerfabs_FAQ)**
 
 - Install board : ESP32 .
-- Install zip library : mf_DW1000.zip
+- Rename mf_DW1000.zip to DW1000.zip and install it.
 - Install library : Adafruit_SSD1306
 - Upload code, select board "ESP32 DEV"
 

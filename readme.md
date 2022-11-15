@@ -6,12 +6,12 @@ Version:		V4.0
 Author:			Vincent
 Create Date:	2021/11/6
 Note:
-
 	2021/12/9 	V2.0:Add a Indoor Positioning demo.
 	2022/6/29 	V2.1:Add DW3000 library.
 	2022/8/1  	V3.0:Provides a library available for high-power versions. Move DW3000 to other 		  					     repositories.
 	2022/9/6	V3.1:Added changes to the high-power version.
 	2022/10/26 	V4.0:Add new version with SSD1306
+	2022/11/15	V4.1:Change library name to mf_DW1000.zip
 */
 ```
 ![](md_pic/main.jpg)
@@ -80,9 +80,17 @@ The chip provides a new approach to real-time location and indoor location syste
 **If you have any questions，such as how to install the development board, how to download the code, how to install the library. Please refer to :[Makerfabs_FAQ](https://github.com/Makerfabs/Makerfabs_FAQ)**
 
 - Install board : ESP32 .
-- Install zip library : DW1000.zip
+- Install zip library : my_DW1000.zip
 - Install library : Adafruit_SSD1306
 - Upload code, select board "ESP32 DEV"
+
+**This library was modified from the [DW1000](https://github.com/thotro/arduino-dw1000) library to work with the Makerfabs hardware. **
+
+**Please download the latest version from our Github.**
+
+
+
+ 
 
 
 

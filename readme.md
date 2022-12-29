@@ -2,7 +2,7 @@
 
 ```c++
 /*
-Version:		V4.0
+Version:		V4.2
 Author:			Vincent
 Create Date:	2021/11/6
 Note:
@@ -12,6 +12,7 @@ Note:
 	2022/9/6	V3.1:Added changes to the high-power version.
 	2022/10/26 	V4.0:Add new version with SSD1306
 	2022/11/15	V4.1:Change library name to mf_DW1000.zip
+	2022/12/29	V4.2: Change wiki link
 */
 ```
 ![](md_pic/main.jpg)
@@ -23,7 +24,7 @@ Note:
 
 [Makerfabs home page](https://www.makerfabs.com/)
 
-[Makerfabs Wiki](https://makerfabs.com/wiki/index.php?title=Main_Page)
+[Makerfabs Wiki](https://wiki.makerfabs.com/)
 
 # Makerfabs ESP32 UWB Serials
 ## Intruduce
@@ -34,41 +35,48 @@ ESP32 UWB : [esp32-uwb-ultra-wideband](https://www.makerfabs.com/esp32-uwb-ultra
 
 ESP32 UWB Pro : [esp32-uwb-high-power](https://www.makerfabs.com/esp32-uwb-high-power-120m.html)
 
-ESP32 UWB Pro with Display : []()
+ESP32 UWB Pro with Display : [ESP32 UWB Pro with Display](https://www.makerfabs.com/esp32-uwb-pro-with-display.html)
 
-Wiki Link : [ESP32_UWB](https://www.makerfabs.com/wiki/index.php?title=ESP32_UWB) 
-
-
-
-Makerfabs ESP32 UWB contains an ESP32 and a DW1000 chip.
-
-The DW1000 is a single-chip wireless transceiver based on ultra-wideband technology. The chip enables you to develop cost-effective RTLS solutions that can pinpoint indoor and outdoor positioning to within 10 cm.
-
-The chip provides a new approach to real-time location and indoor location systems, location-based services, wireless sensor networks and the Internet of Things by providing accurate location awareness and communication.
+Wiki Link : [ESP32 UWB Pro with Display](https://wiki.makerfabs.com/ESP32_UWB_Pro_with_Display.html) 
 
 
 
+Ultra-wideband (UWB) is a short-range, wireless communication protocol that operates through radio waves, enables secure reliable ranging and precision sensing, creating a new dimension of spatial context for wireless devices.
+
+This new ESP32 UWB pro with display is the updated version of ESP32 UWB Pro, with the following new spec:
+
+- On-board OLED, 1.3” 128*64, so the distance results can be directly displayed
+- Lipo battery charger& connector, so this module can work separately with batteries
+- Update UWB position, so the module can be directly installed into a case
 
 
 
-## Feature
+| | **UWB Basic** | **UWB Pro** | **UWB Pro with Display** | **UWB DW3000** |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------ |
+| CPU                   | ESP32-WROOM/WROVER                                           | ESP32-WROVER                                                 | ESP32-WROVER             | ESP32-WROOM/WROVER                                           |
+| Core UWB              | DW1000                                                       | DW1000                                                       | DW1000                   | DW3000                                                       |
+| Screen                | N                                                            | N                                                            | Y                        | N                                                            |
+| Measuring distance(m) | 45                                                           | 200                                                          | 200                      | 20                                                           |
+| Battery Socket        | N                                                            | N                                                            | Y                        | N                                                            |
+| UWB Channel           | 2/5                                                          | 2/5                                                          | 2/5                      | 5/9                                                          |
+| Apple Interoperable   | N                                                            | N                                                            | N                        | Y                                                            |
+| Suitable for          | Normal Testing                                               | Long distance needed                                         | Long distance needed     | Product development                                          |
 
-- Integrated ESP32 2.4G WiFi and Bluetooth.
-- DW1000 UWB module.
-- UWB - X1 - Max module. (Pro and Pro with Display version)
-- SSD1306 OLED screen. (Pro with Display version))
 
 
-### Front:
+### UWB Basic
 
 ![front](md_pic/front.jpg)
 
-### Back:
-![back](md_pic/back.jpg)
 
-### Long Range Version UWB-X1-Pro
 
-![long](md_pic/long.jpg)
+### UWB Pro
+
+![front](md_pic/pro.jpg)
+
+### UWB Pro with Display
+
+![front](md_pic/pro_display.jpg)
 
 
 

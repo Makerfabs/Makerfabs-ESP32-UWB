@@ -17,7 +17,7 @@ For ESP32 UWB or ESP32 UWB Pro
 // connection pins
 const uint8_t PIN_RST = 27; // reset pin
 const uint8_t PIN_IRQ = 34; // irq pin
-const uint8_t PIN_SS = 21;   // spi select pin
+const uint8_t PIN_SS = 4;   // spi select pin
 
 void setup()
 {
